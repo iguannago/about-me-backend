@@ -24,9 +24,9 @@ const Expense = mongoose.model('Expense', ExpenseSchema);
 
 // Login endpoint to generate JWT for Fatima
 app.post('/login', (req, res) => {
-  const { username } = req.body;
-  if (username.toLowerCase() === 'fatima') {
-    const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: '1h' });
+  const { userId } = req.body;
+  if (userId === '34771453F') {
+    const token = jwt.sign({ userId }, SECRET_KEY, { expiresIn: '1h' });
     return res.json({ token });
   }
   res.status(401).json({ error: 'Unauthorized' });
@@ -39,7 +39,7 @@ const authenticate = (req, res, next) => {
 
   jwt.verify(token, SECRET_KEY, (err, decoded) => {
     if (err) return res.status(403).json({ error: 'Forbidden' });
-    if (decoded.username !== 'Fatima')
+    if (decoded.userId !== '34771453F')
       return res.status(403).json({ error: 'Forbidden' });
     next();
   });
